@@ -39,6 +39,7 @@ extern crate failure;
 extern crate mktemp;
 
 extern crate protobuf;
+extern crate protobuf_codegen;
 extern crate protoc;
 
 use std::convert::AsRef;
@@ -255,7 +256,11 @@ where
     ).context("failed to write generated grpc definitions")?;
 
     write_out_generated_files(
-        protobuf::codegen::gen(descriptor_set.get_file(), stringified_inputs.as_slice()),
+        protobuf_codegen::gen(
+            descriptor_set.get_file(),
+            stringified_inputs.as_slice(),
+            &Default::default()
+        ),
         &output
     ).context("failed to write out generated protobuf definitions")?;
 
